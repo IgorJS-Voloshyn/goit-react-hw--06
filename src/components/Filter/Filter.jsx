@@ -1,13 +1,13 @@
 import css from "./Filter.module.css";
 
-export function Filter({ onChange }) {
+export function Filter({}) {
   return (
     <div>
       <label className={css.label}>
         Find contacts by name:
         <input
           className={css.input}
-          onChange={onChange}
+          onChange={}
           type="text"
           name="filter"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
