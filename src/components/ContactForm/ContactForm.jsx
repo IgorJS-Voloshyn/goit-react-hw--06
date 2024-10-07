@@ -1,22 +1,56 @@
 import css from "./ContactForm.module.css";
+import { useId } from "react";
 import { Formik, Form, Field } from "formik";
+import { nanoid } from "@reduxjs/toolkit";
+import { addContact } from "../../redux/contactsSlice";
+import { useDispatch } from "react-redux";
 
 export const ContactForm = () => {
-  const initialValues = {
-    contacts: {
-      items: [],
-    },
-  };
+  const dispatch = useDispatch();
+  const nameFieldId = useId();
+  const numberFieldId = useId();
 
-  const onSubmit = (values, options) => {
-    options.resetForm();
+  const handleSubmit = (value, { resetForm }) => {
+    const contact = { id: nanoid(), name: value.name, number: value.number };
+    dispatch(addContact(contact));
+    resetForm();
   };
 
   return (
-    <Formik initialValues={{ initialValues }} onSubmit={onSubmit}>
+    <Formik
+      initialValues={{
+        name: "",
+        number: "",
+      }}
+      onSubmit={handleSubmit}
+    >
       <Form>
-        <Field type="text" name="name" />
-        <Field type="tel" name="number" />
+        <label htmlFor={nameFieldId} className={css.label}>
+          Name
+        </label>
+        <Field
+          id="nameFieldId"
+          type="text"
+          name="name"
+          placeholder="Name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+
+        <label htmlFor={numberFieldId} className={css.label}>
+          Number
+        </label>
+        <Field
+          id="numberFieldId"
+          type="tel"
+          name="number"
+          placeholder="Number phone"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+        />
+
         <button type="submit" className={css.btn}>
           Add contact
         </button>

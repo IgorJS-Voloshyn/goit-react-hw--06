@@ -1,13 +1,18 @@
+import { useDispatch } from "react-redux";
 import css from "./Filter.module.css";
+import { changeFilter } from "../../redux/filtersSlice";
 
 export function Filter() {
+  const dispatch = useDispatch();
   return (
     <div>
       <label className={css.label}>
         Find contacts by name:
         <input
           className={css.input}
-          onChange={() => {}}
+          onChange={(e) => {
+            dispatch(changeFilter(e.target.value));
+          }}
           type="text"
           name="filter"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
