@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import css from "./SearchBox.module.css";
-import { changeFilter } from "../../redux/filtersSlice";
+import { changeFilter, selectNameFilter } from "../../redux/filtersSlice";
 
 export function SearchBox() {
   const dispatch = useDispatch();
+  const value = useSelector(selectNameFilter);
   return (
     <div>
       <label className={css.label}>
@@ -14,7 +15,7 @@ export function SearchBox() {
             dispatch(changeFilter(e.target.value));
           }}
           type="text"
-          name="filter"
+          value={value}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required

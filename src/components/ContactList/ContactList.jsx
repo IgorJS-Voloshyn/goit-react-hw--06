@@ -14,14 +14,9 @@ export function ContactList() {
 
   return (
     <ul className={css.list}>
-      {filteredData.map((contact) => (
-        <Contact
-          key={contact.id}
-          id={contact.id}
-          name={contact.name}
-          number={contact.number}
-        />
-      ))}
+      {filteredData.map(({ id, name, number }) => {
+        return <Contact key={id} id={id} name={name} number={number} />;
+      })}
     </ul>
   );
 }
